@@ -50,17 +50,19 @@ describe MemoryGame do
 		it "it's not case sensitive" do
 			expect(memory_game.answer_question('paris')).to eq true
 		end
-
-	# 	it "no answer has been submitted" do
-	# 		expect(memory_game.answer_question)
-	# 	end
 	end
 
-	describe "#run" do
+	describe "#menu" do
 
-		it "runs the game" do
-			expect { memory_game.run }.to output('Welcome to the game!').to_stdout
+		it "displays welcome message" do
+			expect { memory_game.menu }.to output('Welcome to the game!').to_stdout
 		end
 	end
-# http://stackoverflow.com/questions/4609872/rspec-commandline-variable-input
+
+	describe "#take_the_quiz" do
+
+		it "asks if the user wants to contribute to the quiz" do
+			expect { memory_game.take_the_quiz }.to output('Do you want to contribute to the quiz?').to_stdout
+		end
+	end
 end

@@ -20,12 +20,17 @@ class MemoryGame
 		@current_question.answer.downcase == answer.downcase
 	end
 
-	def run
+	def menu
 		print 'Welcome to the game!'
+	end
+
+	def take_the_quiz
+		print 'Do you want to contribute to the quiz?'
 	end
 end
 
 QuestionAnswerPair = Struct.new(:question, :answer)
 
 game = MemoryGame.new
-game.run
+game.menu
+game.take_the_quiz
