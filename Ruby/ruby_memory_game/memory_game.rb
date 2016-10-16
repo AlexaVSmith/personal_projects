@@ -21,16 +21,18 @@ class MemoryGame
 	end
 
 	def menu
-		print 'Welcome to the game!'
+		print "Welcome to the game!\n"
 	end
-
-	def take_the_quiz
-		print 'Do you want to contribute to the quiz?'
-	end
+	
+  	def choose
+    	puts "Do you want to contribute to the quiz?\nEither answer 'Y' or 'N'\n>"
+    	@contribute = gets.chomp
+    	puts "Do you want to take the quiz?\nEither answer 'Y' or 'N'\n>"
+    	@take_quiz = gets.chomp
+  	end
 end
 
 QuestionAnswerPair = Struct.new(:question, :answer)
 
 game = MemoryGame.new
 game.menu
-game.take_the_quiz

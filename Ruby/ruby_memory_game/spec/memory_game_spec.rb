@@ -55,14 +55,32 @@ describe MemoryGame do
 	describe "#menu" do
 
 		it "displays welcome message" do
-			expect { memory_game.menu }.to output('Welcome to the game!').to_stdout
+			expect { memory_game.menu }.to output("Welcome to the game!\n").to_stdout
 		end
 	end
+	
+# http://stackoverflow.com/questions/29323771/rspec-test-for-a-method-that-contains-gets-chomp
+	describe "#choose" do
+		before do 
+			io_obj = double
+			expect(subject)
+				.to receive(:gets)
+				.and_return(io_obj)
+				.twice
+			expect(io_obj)
+				.to receive(:chomp)
+				.and_return(:contribute)
+			expect(io_obj)
+				.to receive(:chomp)
+				.and_return(:take_quiz)
+		end
 
-	describe "#take_the_quiz" do
+		it 'asks whether the user wants to @contribute or @take_quiz according to user\'s input' do
+			subject.choose
 
-		it "asks if the user wants to contribute to the quiz" do
-			expect { memory_game.take_the_quiz }.to output('Do you want to contribute to the quiz?').to_stdout
+			expect(memory_game.subject.instance_variable_get(:@contribute)).to eq :contribute
+			expect(memory_game.subject.instance_variable_get(:@take_quiz)).to eq :take_quiz
 		end
 	end
 end
+	
