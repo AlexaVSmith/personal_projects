@@ -23,13 +23,14 @@ class MemoryGame
 	def menu
 		print "Welcome to the game!\n"
 	end
-	
-  	def choose
-    	puts "Do you want to contribute to the quiz?\nEither answer 'Y' or 'N'\n>"
-    	@contribute = gets.chomp
-    	puts "Do you want to take the quiz?\nEither answer 'Y' or 'N'\n>"
-    	@take_quiz = gets.chomp
-  	end
+
+	def capture_answer
+		input = $stdin.gets.chomp
+		if input == "dsoghpqghgeqp"
+			$stdout.puts "error"
+		end
+		input
+	end
 end
 
 QuestionAnswerPair = Struct.new(:question, :answer)

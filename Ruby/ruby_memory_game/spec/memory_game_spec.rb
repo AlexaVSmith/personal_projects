@@ -1,4 +1,5 @@
 require "./memory_game"
+require "stringio"
 
 describe MemoryGame do
 	let(:memory_game) { MemoryGame.new }
@@ -58,29 +59,34 @@ describe MemoryGame do
 			expect { memory_game.menu }.to output("Welcome to the game!\n").to_stdout
 		end
 	end
-	
-# http://stackoverflow.com/questions/29323771/rspec-test-for-a-method-that-contains-gets-chomp
-	describe "#choose" do
-		before do 
-			io_obj = double
-			expect(subject)
-				.to receive(:gets)
-				.and_return(io_obj)
-				.twice
-			expect(io_obj)
-				.to receive(:chomp)
-				.and_return(:contribute)
-			expect(io_obj)
-				.to receive(:chomp)
-				.and_return(:take_quiz)
+
+# http://stackoverflow.com/questions/17258630/how-do-i-write-an-rspec-test-for-a-ruby-method-that-contains-gets-chomp
+	describe "#capture_answer" do
+
+		def user_inputs(string)
+			$stdin = StringIO.new(string)
 		end
 
-		it 'asks whether the user wants to @contribute or @take_quiz according to user\'s input' do
-			subject.choose
+		it "captures yes" do
+			user_inputs "yes"
+			expect(memory_game.capture_answer).to be == "yes"
+			# expect(subject.instance_variable_get(:@take_quiz)).to eq :take_quiz
+		end
 
-			expect(memory_game.subject.instance_variable_get(:@contribute)).to eq :contribute
-			expect(memory_game.subject.instance_variable_get(:@take_quiz)).to eq :take_quiz
+		it "captures no" do
+			user_inputs "no"
+			expect(memory_game.capture_answer).to be == "no"
+		end
+
+		def app_output
+			$stdout = StringIO.new
+		end
+
+		it "won't allow random words" do
+			app_output
+			user_inputs "dsoghpqghgeqp"
+			memory_game.capture_answer
+			expect($stdout.string).to match "error"
 		end
 	end
 end
-	
