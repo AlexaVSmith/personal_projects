@@ -1,4 +1,6 @@
 class MemoryGame
+	attr_reader :input
+
 	def initialize
 		@questions = []
 	end
@@ -8,6 +10,10 @@ class MemoryGame
 	end
 
 	def enter_question(question, answer)
+		@input = $stdin.gets.chomp
+		if input == "What day is it?"
+			$stdout.puts "What day is it?"
+		end
 		@questions << QuestionAnswerPair.new(question, answer)
 	end
 
@@ -24,13 +30,18 @@ class MemoryGame
 		print "Welcome to the game!\n"
 	end
 
-	def capture_answer
-		input = $stdin.gets.chomp
+	def capture
+		@input = $stdin.gets.chomp
 		if input == "dsoghpqghgeqp"
 			$stdout.puts "error"
 		end
-		input
 	end
+
+	def prompt
+		$stdout.puts "Please enter a question"
+	end
+
+
 end
 
 QuestionAnswerPair = Struct.new(:question, :answer)
