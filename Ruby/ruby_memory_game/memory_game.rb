@@ -31,9 +31,11 @@ class MemoryGame
 
 	def capture_answer
 		input = $stdin.gets.chomp
+		new_question = $stdin.gets.chomp
+		new_answer = $stdin.gets.chomp
 		if input == "1"
 			puts "Great, please enter your question here >"
-			enter_question("test", "test")
+			enter_question(new_question, new_answer)
 		elsif input == "2"
 			puts "Cool, let me test you then!"
 		else
