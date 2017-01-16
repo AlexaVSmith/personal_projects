@@ -53,10 +53,13 @@ describe MemoryGame do
 		end
 	end
 
-	describe "#menu" do
-
+	describe "#menu options" do
 		it "displays welcome message" do
-			expect { memory_game.menu }.to output("Welcome to the game!\n").to_stdout
+			expect{memory_game.welcome}.to output("Welcome to the game!\n").to_stdout
+		end
+
+		it "asks whether the player wants to enter a new question" do
+			expect{memory_game.option_to_enter_new_question}.to output("Enter '1' to add to the quiz\nEnter '2' to take the quiz >\n").to_stdout
 		end
 	end
 
@@ -67,26 +70,28 @@ describe MemoryGame do
 			$stdin = StringIO.new(string)
 		end
 
-		it "captures yes" do
-			user_inputs "yes"
-			expect(memory_game.capture_answer).to be == "yes"
-			# expect(subject.instance_variable_get(:@take_quiz)).to eq :take_quiz
-		end
-
-		it "captures no" do
-			user_inputs "no"
-			expect(memory_game.capture_answer).to be == "no"
-		end
-
 		def app_output
 			$stdout = StringIO.new
+		end
+
+		it "captures 1" do
+			app_output
+			user_inputs "1"
+			expect(memory_game.capture_answer).to be == "1"
+			expect($stdout.string).to match "Great, please enter your question here >"
+		end
+
+		it "captures 2" do
+			user_inputs "2"
+			expect(memory_game.capture_answer).to be == "2"
+			expect($stdout.string).to match "Cool, let me test you then!"
 		end
 
 		it "won't allow random words" do
 			app_output
 			user_inputs "dsoghpqghgeqp"
 			memory_game.capture_answer
-			expect($stdout.string).to match "error"
+			expect($stdout.string).to match "I don't know what you mean, please try again"
 		end
 	end
 end
